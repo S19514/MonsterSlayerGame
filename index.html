@@ -99,9 +99,18 @@
         <ul>
           <li
             v-if="battleLogVisible"
-            v-for="(log,index) in battleLog"
+            v-for="log in battleLog"
             :key="index">
-            {{log}}
+            <span :class="'log--player', 'log--monster'">
+              {{log.actionBy === 'player' ? 'Player' : 'Monster'}}
+            </span>
+            <span v-if="log.actionType === 'heal'">
+              heals himself for <span class="log--heal">{{ log.actionValue}}</span></span
+            >
+            <span v-else-if="log.actionType ==='surrender'"> surrenders. </span>
+            <span v-else>
+              attacks and deals <span class="log--damage">{{ log.actionValue}}</span></span
+            >
           </li>
         </ul>
       </section>

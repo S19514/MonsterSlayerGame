@@ -23,7 +23,7 @@ const app = Vue.createApp({
       if (this.monsterHealth - attackValue < this.minHealth) {
         this.monsterHealth = this.minHealth;
       } else {
-        this.battleLog.push('Player dealed ' + attackValue + ' damage');
+        this.addLogMessage('player', 'attack', attackValue);
         this.monsterHealth -= attackValue;
       }
       setTimeout(() => {
@@ -35,7 +35,7 @@ const app = Vue.createApp({
       if (this.playerHealth - attackValue < this.minHealth) {
         this.playerHealth = this.minHealth;
       } else {
-        this.battleLog.push('Monster dealed ' + attackValue + ' damage');
+        this.addLogMessage('monster', 'attack', attackValue);
         this.playerHealth -= attackValue;
       }
     },
@@ -45,7 +45,7 @@ const app = Vue.createApp({
       if (this.monsterHealth - attackValue < this.minHealth) {
         this.monsterHealth = this.minHealth;
       } else {
-        this.battleLog.push('Player dealed ' + attackValue + ' damage');
+        this.addLogMessage('player', 'special-attack', attackValue);
         this.monsterHealth -= attackValue;
       }
       setTimeout(() => {
@@ -61,11 +61,13 @@ const app = Vue.createApp({
       } else {
         this.playerHealth += healValue;
       }
+      this.addLogMessage('player', 'heal', this.healValue);
       setTimeout(() => {
         this.attackPlayer();
       }, this.attackTimeout);
     },
     surrender() {
+      this.addLogMessage('player', 'surrender', null);
       this.winner = 'monster';
     },
     restartGame() {
@@ -74,6 +76,13 @@ const app = Vue.createApp({
       this.currentRound = 0;
       this.winner = null;
       this.battleLog = [];
+    },
+    addLogMessage(who, what, value) {
+      this.battleLog.unshift({
+        actionBy: who,
+        actionType: what,
+        actionValue: value,
+      });
     },
   },
   computed: {
