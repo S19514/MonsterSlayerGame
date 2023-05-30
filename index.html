@@ -77,19 +77,35 @@
         <p></p>
         <h3 v-if="winner === 'player'">You won!</h3>
         <h3 v-if="winner === 'draw'">It's a draw!</h3>
-        <button @click="restartGame">Play again</button>
+        <button
+          @click="restartGame"
+          :disabled="buttonLocked">
+          Play again
+        </button>
       </section>
       <section
         id="controls"
         v-if="!winner">
-        <button @click="attackMonster">ATTACK</button>
+        <button
+          @click="attackMonster"
+          :disabled="buttonLocked">
+          ATTACK
+        </button>
         <button
           @click="specialAttackMonster"
-          :disabled="mayUseSpecialAttack">
+          :disabled="mayUseSpecialAttack || buttonLocked">
           SPECIAL ATTACK
         </button>
-        <button @click="healPlayer">HEAL</button>
-        <button @click="surrender">SURRENDER</button>
+        <button
+          @click="healPlayer"
+          :disabled="buttonLocked">
+          HEAL
+        </button>
+        <button
+          @click="surrender"
+          :disabled="buttonLocked">
+          SURRENDER
+        </button>
       </section>
       <section
         v-if="winner"

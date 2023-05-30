@@ -14,6 +14,7 @@ const app = Vue.createApp({
       attackTimeout: 500,
       winner: null,
       battleLogVisible: false,
+      buttonLocked: false,
     };
   },
   methods: {
@@ -26,6 +27,7 @@ const app = Vue.createApp({
         this.addLogMessage('player', 'attack', attackValue);
         this.monsterHealth -= attackValue;
       }
+      this.buttonLocked = true;
       setTimeout(() => {
         this.attackPlayer();
       }, this.attackTimeout);
@@ -38,6 +40,7 @@ const app = Vue.createApp({
         this.addLogMessage('monster', 'attack', attackValue);
         this.playerHealth -= attackValue;
       }
+      this.buttonLocked = false;
     },
     specialAttackMonster() {
       this.currentRound++;
@@ -48,6 +51,7 @@ const app = Vue.createApp({
         this.addLogMessage('player', 'special-attack', attackValue);
         this.monsterHealth -= attackValue;
       }
+      this.buttonLocked = true;
       setTimeout(() => {
         this.attackPlayer();
       }, this.attackTimeout);
@@ -55,6 +59,7 @@ const app = Vue.createApp({
 
     healPlayer() {
       this.currentRound++;
+      this.buttonLocked = true;
       const healValue = getRandomValue(8, 20);
       if (this.playerHealth + healValue > this.maxHealth) {
         this.playerHealth = this.maxHealth;
