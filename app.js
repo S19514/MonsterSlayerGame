@@ -61,7 +61,7 @@ const app = Vue.createApp({
       } else {
         this.playerHealth += healValue;
       }
-      this.addLogMessage('player', 'heal', this.healValue);
+      this.addLogMessage('player', 'heal', healValue);
       setTimeout(() => {
         this.attackPlayer();
       }, this.attackTimeout);

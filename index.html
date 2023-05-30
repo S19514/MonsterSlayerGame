@@ -99,9 +99,9 @@
         <ul>
           <li
             v-if="battleLogVisible"
-            v-for="log in battleLog"
-            :key="index">
-            <span :class="'log--player', 'log--monster'">
+            v-for="log in battleLog">
+            <span
+              :class="{'log--player':log.actionBy ==='player', 'log--monster':log.actionBy === 'monster'}">
               {{log.actionBy === 'player' ? 'Player' : 'Monster'}}
             </span>
             <span v-if="log.actionType === 'heal'">
